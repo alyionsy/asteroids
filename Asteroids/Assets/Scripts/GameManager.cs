@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -9,18 +10,20 @@ public class GameManager : MonoBehaviour
     public ParticleSystem explosion;
     public Text scoreText;
     public Image[] lives;
+    private GameplaySoundManager gsm;
 
     public AsteroidSpawner spawner;
 
     public float cooldown = 1.0f;
-    public float godModeCooldown = 2.0f;
+    public float godModeCooldown = 10.0f;
 
-    public int health = 3;
+    private int health = 3;
+    private int numberOfLives;
     public int score = 0;
-    public int numberOfLives;
 
     private void Start()
     {
+        gsm = GetComponent<GameplaySoundManager>();
         numberOfLives = health;
     }
 
@@ -32,6 +35,7 @@ public class GameManager : MonoBehaviour
     public void AsteroidDestroyed(Asteroid asteroid)
     {
         explosion.transform.position = asteroid.transform.position;
+        gsm.PlayAsteroidDestroySound();
         explosion.Play();
         score += 100;
 
@@ -46,11 +50,13 @@ public class GameManager : MonoBehaviour
         if (health <= 0)
         {
             explosion.transform.position = player.transform.position;
+            gsm.PlayDeathSound();
             explosion.Play();
-            GameOver();
+            Invoke(nameof(GameOver), cooldown);
         }
         else
         {
+            gsm.PlayHurtSound();
             Invoke(nameof(Cooldown), cooldown);
         }
     }
@@ -70,6 +76,6 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        //TODO
+        SceneManager.LoadScene("GameOver");
     }
 }

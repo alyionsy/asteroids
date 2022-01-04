@@ -9,7 +9,9 @@ public class PlayerController : MonoBehaviour
 
     public float speed;
 
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
+    private PlayerSoundManager psm;
+    private SpriteRenderer sr;
     public Camera cam;
 
     private Vector2 movement;
@@ -19,6 +21,9 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
+        psm = GetComponent<PlayerSoundManager>();
+        sr = GetComponent<SpriteRenderer>();
         screenMin = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
         screenMax = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
     }
@@ -28,24 +33,27 @@ public class PlayerController : MonoBehaviour
         mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
         movement = new Vector2(mousePosition.x, mousePosition.y);
 
-        if (rb.position.x > screenMax.x)
+        if (!sr.isVisible)
         {
-            rb.position = new Vector2(screenMin.x, rb.position.y);
-        }
+            if (rb.position.x > screenMax.x)
+            {
+                rb.position = new Vector2(screenMin.x, rb.position.y);
+            }
 
-        if (rb.position.x < screenMin.x)
-        {
-            rb.position = new Vector2(screenMax.x, rb.position.y);
-        }
+            if (rb.position.x < screenMin.x)
+            {
+                rb.position = new Vector2(screenMax.x, rb.position.y);
+            }
 
-        if (rb.position.y > screenMax.y)
-        {
-            rb.position = new Vector2(rb.position.x, screenMin.y);
-        }
+            if (rb.position.y > screenMax.y)
+            {
+                rb.position = new Vector2(rb.position.x, screenMin.y);
+            }
 
-        if (rb.position.y < screenMin.y)
-        {
-            rb.position = new Vector2(rb.position.x, screenMax.y);
+            if (rb.position.y < screenMin.y)
+            {
+                rb.position = new Vector2(rb.position.x, screenMax.y);
+            }
         }
     }
 
@@ -77,6 +85,7 @@ public class PlayerController : MonoBehaviour
 
     private void Fire()
     {
+        psm.PlayFireSound();
         Laser laser = Instantiate(laserPrefab, transform.position + transform.up, transform.rotation);
         laser.Project(transform.up);
     }

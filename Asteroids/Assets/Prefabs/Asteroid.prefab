@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4672204216412162812}
   - component: {fileID: 4672204216412162811}
   - component: {fileID: 114201183371517106}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Asteroid
   m_TagString: Asteroid
   m_Icon: {fileID: 0}
@@ -152,4 +152,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: bd3f072c721d4734598a9ecab9aa0a73, type: 3}
   - {fileID: 21300000, guid: f87a83093f7e89c42aa95c14499ed68b, type: 3}
   - {fileID: 21300000, guid: 62a87bd740b73704bb68b9539d1b84b8, type: 3}
-  speed: 15
+  speed: 10

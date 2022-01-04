@@ -33,24 +33,27 @@ public class Asteroid : MonoBehaviour
 
     private void Update()
     {
-        if (rb.position.x > screenMax.x)
+        if (!sr.isVisible)
         {
-            rb.position = new Vector2(screenMin.x, rb.position.y);
-        }
+            if (rb.position.x > screenMax.x)
+            {
+                rb.position = new Vector2(screenMin.x, rb.position.y);
+            }
 
-        if (rb.position.x < screenMin.x)
-        {
-            rb.position = new Vector2(screenMax.x, rb.position.y);
-        }
+            if (rb.position.x < screenMin.x)
+            {
+                rb.position = new Vector2(screenMax.x, rb.position.y);
+            }
 
-        if (rb.position.y > screenMax.y)
-        {
-            rb.position = new Vector2(rb.position.x, screenMin.y);
-        }
+            if (rb.position.y > screenMax.y)
+            {
+                rb.position = new Vector2(rb.position.x, screenMin.y);
+            }
 
-        if (rb.position.y < screenMin.y)
-        {
-            rb.position = new Vector2(rb.position.x, screenMax.y);
+            if (rb.position.y < screenMin.y)
+            {
+                rb.position = new Vector2(rb.position.x, screenMax.y);
+            }
         }
     }
 
