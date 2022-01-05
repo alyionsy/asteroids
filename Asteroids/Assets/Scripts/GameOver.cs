@@ -15,4 +15,14 @@ public class GameOver : MonoBehaviour
     {
         SceneManager.LoadScene("Menu");
     }
+
+    public void RestartPressed()
+    {
+        Invoke(nameof(LoadGame), loadingTime);
+    }
+
+    private void LoadGame()
+    {
+        SceneManager.LoadScene("Asteroids");
+    }
 }

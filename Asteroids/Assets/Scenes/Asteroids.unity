@@ -5309,8 +5309,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 0.5
-  m_LinearDrag: 0.5
-  m_AngularDrag: 0.5
+  m_LinearDrag: 0
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -5394,7 +5394,7 @@ MonoBehaviour:
   laserPrefab: {fileID: 114667227110423570, guid: f95a1b4af76060f42927627c541e3379,
     type: 3}
   gm: {fileID: 2043728255}
-  speed: 5
+  speed: 10
   cam: {fileID: 519420031}
 --- !u!82 &906661488
 AudioSource:

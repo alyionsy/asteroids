@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public GameManager gm;
 
     public float speed;
+    private float fixedSpeed;
 
     private Rigidbody2D rb;
     private PlayerSoundManager psm;
@@ -26,12 +27,17 @@ public class PlayerController : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         screenMin = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
         screenMax = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
+        fixedSpeed = speed;
     }
 
     private void Update()
     {
         mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
-        movement = new Vector2(mousePosition.x, mousePosition.y);
+        if ((mousePosition - rb.position).magnitude > 1.5f)
+        {
+            movement = mousePosition - rb.position;
+        }
+
 
         if (!sr.isVisible)
         {
@@ -59,22 +65,24 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 direction = mousePosition - rb.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+        float angle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg - 90.0f;
         rb.rotation = angle;
 
         if (Input.GetKey(KeyCode.W))
         {
             rb.MovePosition(rb.position + movement.normalized * speed * Time.fixedDeltaTime);
         }
-        else if (Input.GetKey(KeyCode.A))
+
+        if (Input.GetKey(KeyCode.A))
         {
-            rb.MovePosition(rb.position + new Vector2(- movement.y, movement.x).normalized * speed * Time.fixedDeltaTime);
+            rb.MovePosition(rb.position + new Vector2(-movement.y, movement.x).normalized * speed * Time.fixedDeltaTime);
         }
-        else if (Input.GetKey(KeyCode.D))
+        
+        if (Input.GetKey(KeyCode.D))
         {
-            rb.MovePosition(rb.position + new Vector2(movement.y, - movement.x).normalized * speed * Time.fixedDeltaTime);
+            rb.MovePosition(rb.position + new Vector2(movement.y, -movement.x).normalized * speed * Time.fixedDeltaTime);
         }
+
 
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
@@ -100,7 +108,6 @@ public class PlayerController : MonoBehaviour
             gameObject.SetActive(false);
 
             gm.PlayerHurt();
-            //Destroy(gameObject);
         }
     }
 }
