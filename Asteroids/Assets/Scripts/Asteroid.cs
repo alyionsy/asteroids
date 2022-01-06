@@ -1,31 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
     public Sprite[] sprites;
+    public GameManager gameManager;
+
     public float speed = 5.0f;
 
-    private SpriteRenderer sr;
-    private Rigidbody2D rb;
-    private BoxCollider2D bc;
-
+    private SpriteRenderer spriteRenderer;
+    private Rigidbody2D rigidBody;
+    private BoxCollider2D boxCollider;
     private Vector2 screenMax;
     private Vector2 screenMin;
 
     private void Awake()
     {
-        sr = GetComponent<SpriteRenderer>();
-        rb = GetComponent<Rigidbody2D>();
-        bc = GetComponent<BoxCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        rigidBody = GetComponent<Rigidbody2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     private void Start()
     {
-        sr.sprite = sprites[Random.Range(0, sprites.Length)];
-        bc.size = new Vector2(sr.sprite.bounds.size.x, sr.sprite.bounds.size.y);
-        rb.rotation = Random.value * Mathf.Rad2Deg;
+        spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
+        boxCollider.size = new Vector2(spriteRenderer.sprite.bounds.size.x, spriteRenderer.sprite.bounds.size.y);
+        rigidBody.rotation = Random.value * Mathf.Rad2Deg;
 
         screenMin = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
         screenMax = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
@@ -33,40 +33,40 @@ public class Asteroid : MonoBehaviour
 
     private void Update()
     {
-        if (!sr.isVisible)
+        if (!spriteRenderer.isVisible)
         {
-            if (rb.position.x > screenMax.x)
+            if (rigidBody.position.x > screenMax.x)
             {
-                rb.position = new Vector2(screenMin.x, rb.position.y);
+                rigidBody.position = new Vector2(screenMin.x, rigidBody.position.y);
             }
 
-            if (rb.position.x < screenMin.x)
+            if (rigidBody.position.x < screenMin.x)
             {
-                rb.position = new Vector2(screenMax.x, rb.position.y);
+                rigidBody.position = new Vector2(screenMax.x, rigidBody.position.y);
             }
 
-            if (rb.position.y > screenMax.y)
+            if (rigidBody.position.y > screenMax.y)
             {
-                rb.position = new Vector2(rb.position.x, screenMin.y);
+                rigidBody.position = new Vector2(rigidBody.position.x, screenMin.y);
             }
 
-            if (rb.position.y < screenMin.y)
+            if (rigidBody.position.y < screenMin.y)
             {
-                rb.position = new Vector2(rb.position.x, screenMax.y);
+                rigidBody.position = new Vector2(rigidBody.position.x, screenMax.y);
             }
         }
     }
 
     public void SetTrajectory(Vector2 direction)
     {
-        rb.AddForce(direction * speed);
+        rigidBody.AddForce(direction * speed);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Laser")
+        if (collision.gameObject.CompareTag("Laser"))
         {
-            FindObjectOfType<GameManager>().AsteroidDestroyed(this);
+            gameManager.AsteroidDestroyed(this);
             Destroy(gameObject);
         }
     }

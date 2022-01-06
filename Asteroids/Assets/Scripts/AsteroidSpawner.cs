@@ -1,15 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AsteroidSpawner : MonoBehaviour
 {
     public Asteroid asteroidPrefab;
 
-    public float spawnDistance = 15.0f;
     public float trajectoryVariance = 15.0f;
-    private int spawnAmountMin = 5;
-    private int spawnAmountMax = 10;
+    public int spawnAmountMin = 5;
+    public int spawnAmountMax = 10;
+    private readonly float spawnDistance = 15.0f;
 
     private void Start()
     {

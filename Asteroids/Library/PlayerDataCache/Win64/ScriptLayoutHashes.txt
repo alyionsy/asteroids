@@ -1,6 +1,6 @@
 Win64
 PlayerPath?
-Q:/test/Asteroids/Asteroids.exe
+Q:/test/Build1/Asteroids.exe
 SceneListBegin?
 Assets/Scenes/Menu.unity
 Assets/Scenes/Asteroids.unity

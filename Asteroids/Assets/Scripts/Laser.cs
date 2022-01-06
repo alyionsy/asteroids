@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
     public float speed = 5.0f;
-    public float lifetime = 10.0f;
+    public float lifetime = 1.0f;
 
     private Rigidbody2D rb;
 
