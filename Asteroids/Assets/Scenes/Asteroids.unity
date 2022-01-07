@@ -5034,8 +5034,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   asteroidPrefab: {fileID: 114201183371517106, guid: f8b638b34e805e24baa16ebdee901b0b,
     type: 3}
-  spawnDistance: 15
   trajectoryVariance: 15
+  spawnAmountMin: 5
+  spawnAmountMax: 10
 --- !u!4 &489889977
 Transform:
   m_ObjectHideFlags: 0
@@ -5856,13 +5857,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 906661487}
+  spawner: {fileID: 489889976}
   explosion: {fileID: 236098710}
   scoreText: {fileID: 1866468910}
   lives:
   - {fileID: 1341001734}
   - {fileID: 1615344372}
   - {fileID: 1084714244}
-  spawner: {fileID: 489889976}
   cooldown: 1
   godModeCooldown: 3
 --- !u!4 &2043728256

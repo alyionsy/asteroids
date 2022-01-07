@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     private Vector2 movement;
+    private Vector2 direction;
     private Vector2 mousePosition;
     private Vector2 screenMax;
     private Vector2 screenMin;
@@ -25,6 +26,9 @@ public class PlayerController : MonoBehaviour
 
         screenMin = Camera.main.ViewportToWorldPoint(Vector2.zero);
         screenMax = Camera.main.ViewportToWorldPoint(Vector2.one);
+
+        mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
+        movement = mousePosition - rigidBody.position;
     }
 
     private void Update()
@@ -43,6 +47,11 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * speed * Time.deltaTime);
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Fire();
         }
 
         if (!spriteRenderer.isVisible)
@@ -71,13 +80,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float angle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg - 90.0f;
+        direction = mousePosition - rigidBody.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90.0f;
         rigidBody.rotation = angle;
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Fire();
-        }
     }
 
     private void Fire()
