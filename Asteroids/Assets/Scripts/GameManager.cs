@@ -10,10 +10,10 @@ public class GameManager : MonoBehaviour
     public Text scoreText;
     public Image[] lives;
 
-    private GameplaySoundManager soundManager;
-
     public float cooldown = 1.0f;
     public float godModeCooldown = 10.0f;
+
+    private GameplaySoundManager soundManager;
 
     private int health = 3;
     private int numberOfLives;

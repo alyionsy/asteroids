@@ -2,11 +2,11 @@
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed;
-
     public Laser laserPrefab;
     public GameManager gameManager;
     public Camera cam;
+
+    public float speed;
 
     private Rigidbody2D rigidBody;
     private PlayerSoundManager soundManager;
@@ -46,7 +46,8 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
-            transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * speed * Time.deltaTime);
+            float movementAngle = Input.GetAxis("Horizontal") * Mathf.Rad2Deg * speed * Time.deltaTime / movement.magnitude;
+            transform.RotateAround(mousePosition, Vector3.forward, movementAngle);
         }
 
         if (Input.GetMouseButtonDown(0))
