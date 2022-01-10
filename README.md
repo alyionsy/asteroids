@@ -14,7 +14,7 @@ This solution is compatible with Unity version 2021.2.7f1
 0) Launch the project in the editor;
 1) Select File -> Build and Run.
 
-Notes:
+### Notes:
 - the scenes for Menu and Game Over were added;
 - movement to the left / right is implemented as the circular motion with a center at the mouse position on the screen and a radius equal to the distance between Player and the mouse;
 - to shoot press LNB;
